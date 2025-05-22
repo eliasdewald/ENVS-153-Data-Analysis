@@ -7,6 +7,7 @@ format: html
 library(tidyverse)
 library(here)
 library(janitor)
+library(ggeffects)
 data1 <- read.csv("ES-153_Data.csv") |> 
   clean_names()
 ```
@@ -17,7 +18,28 @@ Steps
 flower_model <- lm(pollinator_count ~ flower_count,
                    data = data1)
 summary(flower_model)
-
+flower_predict <- ggpredict(flower_model, 
+                            terms = "flower_count") 
+ggplot(data = data1,
+       aes(x = flower_count,
+           y = pollinator_count)) + 
+  geom_point(size = 4,
+             fill = "darkgoldenrod1",
+             shape = 21,
+             stroke = 1) + 
+  geom_ribbon(data = flower_predict,
+           aes(x = x,
+              y = predicted,
+              ymax = conf.high,
+              ymin = conf.low),
+           alpha = 0.1) + 
+  geom_line(data = flower_predict,
+            aes(x = x,
+                y = predicted),
+            linewidth = 1) + 
+  labs(x = "Flower Count",
+       y = "Pollinator Count")
+              
 
 ```
 
