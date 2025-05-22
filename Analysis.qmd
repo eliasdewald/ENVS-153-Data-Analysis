@@ -1,0 +1,23 @@
+---
+title: "Analysis"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+data1 <- read.csv("ES-153_Data.csv") |> 
+  clean_names()
+```
+
+Steps
+```{r}
+
+flower_model <- lm(pollinator_count ~ flower_count,
+                   data = data1)
+summary(flower_model)
+
+
+```
+
