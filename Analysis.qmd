@@ -47,4 +47,7 @@ cor.test(data1$flower_count, data1$pollinator_count,
          method = "pearson")
 
 ```
+```{r}
+summary(flower_model)
+```
 
